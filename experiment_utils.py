@@ -1,3 +1,5 @@
+import os
+
 from sklearn.metrics.cluster import normalized_mutual_info_score, adjusted_rand_score, adjusted_mutual_info_score
 from sklearn import metrics
 from sklearn.preprocessing import LabelEncoder
@@ -27,8 +29,10 @@ def avg_closest_distance(emba,embb):
     # Display results
     return average_closest_distance
 
-tweet_data_path = 'data_loaders/tweet.csv'
-massive_data_path = 'data_loaders/massive.jsonl'
+_REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+tweet_data_path = os.path.join(_REPO_ROOT, 'data_loaders', 'tweet.csv')
+massive_data_path = os.path.join(_REPO_ROOT, 'data_loaders', 'massive.jsonl')
+goemo_data_path = os.path.join(_REPO_ROOT, 'data_loaders', 'goemo.tsv')
 
 def load_dataset(type, opt = None):
     if type == 'bank77':
@@ -49,7 +53,7 @@ def load_goemo():
     text_type = "Emotion(s):"
 
     num_clusters = 27
-    df = pd.read_csv('goemo.tsv', sep = '\t', header = None)
+    df = pd.read_csv(goemo_data_path, sep='\t', header=None, encoding='utf-8')
     df.columns = ['text','emo','user']
     num_emo = []
     for i in df.emo:
