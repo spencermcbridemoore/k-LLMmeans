@@ -271,7 +271,7 @@ for data in DATASETS:
     print(f"Saved {out_path}")
 '''
 
-CELL2 = r'''# Diaz-Rodriguez et al. 2025, arXiv:2502.09667v4, Table 5.
+CELL2 = r'''# Diaz-Rodriguez et al. 2025, arXiv:2502.09667v5, Table 5.
 # text-embedding-3-small, 10 seeds — mean ACC/NMI; std in Table 5 parentheses.
 # Paper targets below apply to emb_type "openai" only. Other embeddings: see Table 2/6 (different datasets);
 # we do not duplicate those here — paper columns are NaN for non-openai rows.
