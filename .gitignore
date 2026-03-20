@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+
+# Jupyter
+.ipynb_checkpoints
+
+# Large precomputed data and results
+processed_data/*.pkl
+results/*.pkl
