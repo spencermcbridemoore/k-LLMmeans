@@ -346,6 +346,11 @@ def _load_all_baselines_if_needed():
     return merged
 
 
+def _load_bank77_baseline_if_needed():
+    """Earlier notebooks used this name; it loads every `DATASETS` entry, not only Bank77."""
+    return _load_all_baselines_if_needed()
+
+
 def build_paper_comparison_table(all_results):
     """
     cluster_metrics returns ACC and NMI in [0, 1]; paper reports percentages (x100).
@@ -416,12 +421,30 @@ def build_paper_comparison_table(all_results):
     return pd.DataFrame(rows)
 
 
-all_runs = _load_all_baselines_if_needed()
+all_runs = _load_bank77_baseline_if_needed()
 comparison_df = build_paper_comparison_table(all_runs)
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", 220)
 pd.set_option("display.max_rows", 200)
-comparison_df
+
+from IPython.display import display
+
+print(
+    f"Baselines loaded: {sorted(all_runs)} ({len(all_runs)} datasets) | {len(comparison_df)} metric rows.",
+    flush=True,
+)
+for d in DATASETS:
+    sub = comparison_df[comparison_df["dataset"] == d]
+    if sub.empty:
+        print(
+            f"\\n[{d}] (no rows -- need results/sims_offline_{d}_baseline.pkl or re-run the experiment cell)",
+            flush=True,
+        )
+        continue
+    print(f"\\n### {d}", flush=True)
+    display(sub.sort_values(["emb_type", "method"], ignore_index=True))
+
+comparison_df.sort_values(["dataset", "emb_type", "method"], ignore_index=True)
 '''
 
 
